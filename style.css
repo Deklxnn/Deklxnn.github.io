@@ -1,0 +1,169 @@
+/* Style for the form container */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+.qualiTitle {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.addTimeBtn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.separator {
+  border: none;
+  height: 10px;
+  background-color: #ccc;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+
+#driverForm {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+input[type="text"] {
+  width: calc(100% - 12px);
+  padding: 8px;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.driverInfo {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.driverInfo h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.driverInfo ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+.driverInfo ul li {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+button.showAllTimesBtn {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.showAllTimesBtn:hover {
+  background-color: #45a049;
+}
+
+.deleteDriverBtn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.deleteDriverBtn:hover {
+  background-color: darkred;
+}
+
+.showAllTimesBtn {
+  margin-bottom: 8px;
+}
+
+#resortBtn {
+  padding: 15px 30px;
+  font-size: 20px;
+  background-color: #ff9800;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#resortBtn:hover {
+  background-color: #f57c00;
+}
+
+.leftContainer:hover {
+  opacity: 1;
+}
+
+#simplifiedLeaderboard {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ecdbdb;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#simplifiedLeaderboard div {
+  margin-bottom: 8px;
+  padding: 6px;
+  border-bottom: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+}
+
+#simplifiedLeaderboard div:last-child {
+  border-bottom: none;
+}

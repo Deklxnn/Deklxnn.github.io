@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Driver Information</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1 class="qualiTitle">Time Inputter</h1>
+
+    <form id="driverForm">
+      <label for="driverName">Driver name:</label>
+      <input
+        type="text"
+        id="driverName"
+        name="driverName"
+        required
+      /><br /><br />
+
+      <div id="driverTimes">
+        <div class="driverTimeWrapper">
+          <label for="driverTime">Driver time:</label>
+          <input
+            type="text"
+            class="driverTime"
+            name="driverTime"
+            required
+            pattern="^[0-9]{1,2}:[0-5][0-9].[0-9]{3}\*?$"
+            title="Please enter time in format (Minutes):(Seconds).(Milliseconds) followed by an optional asterisk (*)"
+          />
+        </div>
+      </div>
+
+      <button type="button" class="addTimeBtn">Add lap</button><br /><br />
+      <button type="submit" class="submitBtn">Submit</button>
+    </form>
+
+    <hr class="separator" />
+    <div class="driverInfoContainer">
+      <div id="driverInfo"></div>
+      <div id="simplifiedLeaderboard"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
