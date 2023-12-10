@@ -60,8 +60,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const driverTimesList = document.createElement("ul");
 
+    let fastestTimeDisplay =
+      driverInfo.fastestTime !== null ? driverInfo.fastestTime : "No valid lap";
     const listItemFastestTime = document.createElement("li");
-    listItemFastestTime.textContent = `Fastest Time: ${driverInfo.fastestTime}`;
+    listItemFastestTime.textContent = `Fastest Time: ${fastestTimeDisplay}`;
     driverTimesList.appendChild(listItemFastestTime);
 
     const showAllTimesButton = document.createElement("button");
@@ -101,12 +103,29 @@ document.addEventListener("DOMContentLoaded", function () {
     driverInfoArray.push(driverInfoDiv);
 
     driverInfoArray.sort((a, b) => {
-      const fastestTimeA = parseTime(
-        a.querySelector("li").textContent.split(": ")[1]
+      const fastestTimeA = a.querySelector("li")
+        ? parseTime(a.querySelector("li").textContent.split(": ")[1])
+        : Infinity;
+      const fastestTimeB = b.querySelector("li")
+        ? parseTime(b.querySelector("li").textContent.split(": ")[1])
+        : Infinity;
+
+      const isInvalidA = driverInfoArray.some((driver) =>
+        driver.querySelector("li").textContent.includes("No valid lap")
       );
-      const fastestTimeB = parseTime(
-        b.querySelector("li").textContent.split(": ")[1]
+      const isInvalidB = driverInfoArray.some((driver) =>
+        driver.querySelector("li").textContent.includes("No valid lap")
       );
+
+      if (isInvalidA && isInvalidB) {
+        if (fastestTimeA !== fastestTimeB) {
+          return fastestTimeA - fastestTimeB;
+        }
+      } else if (isInvalidA && !isInvalidB) {
+        return 1;
+      } else if (!isInvalidA && isInvalidB) {
+        return -1;
+      }
 
       return fastestTimeA - fastestTimeB;
     });
@@ -250,7 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const simplifiedLeaderboard = document.getElementById(
     "simplifiedLeaderboard"
   );
-  simplifiedLeaderboard.style.position = "fixed";
+  simplifiedLeaderboard.style.position = "absolute";
   simplifiedLeaderboard.style.top = "20px";
   simplifiedLeaderboard.style.left = "80%";
   simplifiedLeaderboard.style.transform = "translateX(-50%)";
@@ -275,7 +294,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document.body.appendChild(leftContainer);
 
   leftContainer.addEventListener("mouseenter", function () {
-    leftContainer.style.opacity = "1";
+    leftContainer.style.display = `none`;
+    leftContainer.style.opacity = "0";
   });
 
   leftContainer.addEventListener("mouseleave", function () {
