@@ -165,9 +165,26 @@ button.showAllTimesBtn:hover {
 }
 
 .driverInfoContainer {
-  width: 50%; /* Take up half of the page width */
-  float: left; /* Float the container to the left */
+  width: 50%;
+  float: left;
   box-sizing: border-box;
   padding: 0 20px;
-  margin-top: 20px; /* Adjust the margin-top as needed */
+  margin-top: 20px;
+}
+
+.hideAllTimesBtn {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #ffa500;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.hideAllTimesBtn:hover {
+  background-color: #db8f00;
 }
