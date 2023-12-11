@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const showAllTimesButton = document.createElement("button");
     showAllTimesButton.classList.add("showAllTimesBtn");
     showAllTimesButton.textContent = `Show all lap times`;
+
     showAllTimesButton.addEventListener("click", function () {
       const listItemAllTimes = document.createElement("li");
       const allTimesList = document.createElement("ul");
@@ -91,6 +92,18 @@ document.addEventListener("DOMContentLoaded", function () {
       listItemAllTimes.appendChild(allTimesList);
       driverTimesList.appendChild(listItemAllTimes);
       showAllTimesButton.style.display = "none";
+
+      // Create "Hide lap times" button
+      const hideAllTimesButton = document.createElement("button");
+      hideAllTimesButton.classList.add("hideAllTimesBtn");
+      hideAllTimesButton.textContent = `Hide lap times`;
+      hideAllTimesButton.addEventListener("click", function () {
+        listItemAllTimes.style.display = "none";
+        showAllTimesButton.style.display = "block";
+        hideAllTimesButton.remove(); // Remove the "Hide lap times" button
+      });
+
+      driverTimesList.appendChild(hideAllTimesButton);
     });
 
     const validLapTimes = driverInfo.lapTimes.filter(
