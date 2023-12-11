@@ -93,14 +93,13 @@ document.addEventListener("DOMContentLoaded", function () {
       driverTimesList.appendChild(listItemAllTimes);
       showAllTimesButton.style.display = "none";
 
-      // Create "Hide lap times" button
       const hideAllTimesButton = document.createElement("button");
       hideAllTimesButton.classList.add("hideAllTimesBtn");
       hideAllTimesButton.textContent = `Hide lap times`;
       hideAllTimesButton.addEventListener("click", function () {
         listItemAllTimes.style.display = "none";
         showAllTimesButton.style.display = "block";
-        hideAllTimesButton.remove(); // Remove the "Hide lap times" button
+        hideAllTimesButton.remove();
       });
 
       driverTimesList.appendChild(hideAllTimesButton);
@@ -109,45 +108,47 @@ document.addEventListener("DOMContentLoaded", function () {
     const validLapTimes = driverInfo.lapTimes.filter(
       (time) => !isInvalidTime(time)
     );
+
     driverTimesList.appendChild(showAllTimesButton);
     driverInfoDiv.appendChild(driverTimesList);
 
     const driverInfoArray = Array.from(driverInfoContainer.children);
     driverInfoArray.push(driverInfoDiv);
 
-    driverInfoArray.sort((a, b) => {
-      const fastestTimeA = a.querySelector("li")
-        ? parseTime(a.querySelector("li").textContent.split(": ")[1])
-        : Infinity;
-      const fastestTimeB = b.querySelector("li")
-        ? parseTime(b.querySelector("li").textContent.split(": ")[1])
-        : Infinity;
+    const validDriverInfoArray = driverInfoArray.filter(
+      (driver) =>
+        !driver.querySelector("li").textContent.includes("No valid lap")
+    );
 
-      const isInvalidA = driverInfoArray.some((driver) =>
-        driver.querySelector("li").textContent.includes("No valid lap")
+    validDriverInfoArray.sort((a, b) => {
+      const fastestTimeA = parseTime(
+        a.querySelector("li").textContent.split(": ")[1]
       );
-      const isInvalidB = driverInfoArray.some((driver) =>
-        driver.querySelector("li").textContent.includes("No valid lap")
+      const fastestTimeB = parseTime(
+        b.querySelector("li").textContent.split(": ")[1]
       );
-
-      if (isInvalidA && isInvalidB) {
-        if (fastestTimeA !== fastestTimeB) {
-          return fastestTimeA - fastestTimeB;
-        }
-      } else if (isInvalidA && !isInvalidB) {
-        return 1;
-      } else if (!isInvalidA && isInvalidB) {
-        return -1;
-      }
 
       return fastestTimeA - fastestTimeB;
     });
 
     driverInfoContainer.innerHTML = "";
-    driverInfoArray.forEach((driver, index) => {
+    validDriverInfoArray.forEach((driver, index) => {
       const driverName = driver.querySelector("h2").textContent.split(" - ")[1];
       const updatedDriverName = driver.querySelector("h2");
       updatedDriverName.textContent = `#${index + 1} - ${driverName}`;
+      driverInfoContainer.appendChild(driver);
+    });
+
+    const invalidDriverInfoArray = driverInfoArray.filter((driver) =>
+      driver.querySelector("li").textContent.includes("No valid lap")
+    );
+
+    invalidDriverInfoArray.forEach((driver) => {
+      const driverName = driver.querySelector("h2").textContent.split(" - ")[1];
+      const updatedDriverName = driver.querySelector("h2");
+      updatedDriverName.textContent = `#${
+        validDriverInfoArray.length + 1
+      } - ${driverName}`;
       driverInfoContainer.appendChild(driver);
     });
 
@@ -171,14 +172,15 @@ document.addEventListener("DOMContentLoaded", function () {
       return null;
     }
 
-    let fastestTime = validLapTimes[0];
-    for (let i = 1; i < validLapTimes.length; i++) {
-      if (compareTimes(validLapTimes[i], fastestTime) < 0) {
-        fastestTime = validLapTimes[i];
-      }
+    validLapTimes.sort(compareTimes);
+
+    let fastestValidTime = validLapTimes[0];
+
+    if (isInvalidTime(fastestValidTime) && validLapTimes.length > 1) {
+      fastestValidTime = validLapTimes[1];
     }
 
-    return fastestTime;
+    return fastestValidTime;
   }
 
   function compareTimes(time1, time2) {
@@ -236,26 +238,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function resortDriverList() {
     const driverInfoArray = Array.from(driverInfoContainer.children);
-    driverInfoArray.sort((a, b) => {
+
+    const validDrivers = driverInfoArray.filter((driver) => {
+      const fastestTime = driver.querySelector("li").textContent.split(": ")[1];
+      return !fastestTime.includes("No valid lap");
+    });
+
+    const noValidLapDrivers = driverInfoArray.filter((driver) => {
+      const fastestTime = driver.querySelector("li").textContent.split(": ")[1];
+      return fastestTime.includes("No valid lap");
+    });
+
+    validDrivers.sort((a, b) => {
       const fastestTimeA = parseTime(
         a.querySelector("li").textContent.split(": ")[1]
       );
       const fastestTimeB = parseTime(
         b.querySelector("li").textContent.split(": ")[1]
       );
-
       return fastestTimeA - fastestTimeB;
     });
 
+    const reorderedDrivers = [...validDrivers, ...noValidLapDrivers];
+
     driverInfoContainer.innerHTML = "";
-    driverInfoArray.forEach((driver, index) => {
+    reorderedDrivers.forEach((driver, index) => {
       const driverName = driver.querySelector("h2").textContent.split(" - ")[1];
       const updatedDriverName = driver.querySelector("h2");
       updatedDriverName.textContent = `#${index + 1} - ${driverName}`;
       driverInfoContainer.appendChild(driver);
     });
 
-    displaySimplifiedLeaderboard(driverInfoArray);
+    displaySimplifiedLeaderboard(reorderedDrivers);
   }
 
   function displaySimplifiedLeaderboard(driverInfoArray) {
