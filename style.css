@@ -188,3 +188,11 @@ button.showAllTimesBtn:hover {
 .hideAllTimesBtn:hover {
   background-color: #db8f00;
 }
+
+.versionNumber {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  color: gray;
+}
