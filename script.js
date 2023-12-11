@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const driverTimes = document.getElementById("driverTimes");
   const driverInfoContainer = document.getElementById("driverInfo");
   const driverForm = document.getElementById("driverForm");
+  const reSortButton = document.querySelector(".reSortBtn");
 
   addTimeBtn.addEventListener("click", function (e) {
     e.preventDefault();
@@ -328,4 +329,6 @@ document.addEventListener("DOMContentLoaded", function () {
   leftContainer.addEventListener("mouseleave", function () {
     leftContainer.style.opacity = "0";
   });
+
+  reSortButton.addEventListener("click", resortDriverList);
 });
