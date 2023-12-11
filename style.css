@@ -196,3 +196,14 @@ button.showAllTimesBtn:hover {
   padding: 10px;
   color: gray;
 }
+
+.reSortButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ffc400;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 213px;
+}
